@@ -65,9 +65,54 @@ const prices = [
 ];
 
 const reviews = [
-  ["“第一次洗完没有躲床底。”", "我家猫很怕陌生环境，店员会慢慢安抚，还发了过程照片，回家状态很好。"],
-  ["“剪得清爽，也没有剃秃。”", "比熊的脸型修得很圆，腿部线条也自然，店员还教了日常梳毛方式。"],
-  ["“价格提前确认，很安心。”", "毛结比较多，开洗前就说清楚处理方式和费用，交付也很细致。"],
+  {
+    title: "“第一次洗完没有躲床底。”",
+    copy: "我家猫很怕陌生环境，店员会慢慢安抚，还发了过程照片，回家状态很好。",
+    name: "米粒妈妈",
+    pet: "英短猫 · 低压洗护",
+  },
+  {
+    title: "“剪得清爽，也没有剃秃。”",
+    copy: "比熊的脸型修得很圆，腿部线条也自然，店员还教了日常梳毛方式。",
+    name: "Lucky 爸爸",
+    pet: "比熊 · 精修造型",
+  },
+  {
+    title: "“价格提前确认，很安心。”",
+    copy: "毛结比较多，开洗前就说清楚处理方式和费用，交付也很细致。",
+    name: "豆包主人",
+    pet: "长毛猫 · 毛结护理",
+  },
+  {
+    title: "“洗完毛特别蓬松。”",
+    copy: "萨摩洗完没有潮味，脚底毛和指甲也修得干净，回家一路都很开心。",
+    name: "雪球姐姐",
+    pet: "萨摩耶 · 基础洗护",
+  },
+  {
+    title: "“胆小狗也能慢慢适应。”",
+    copy: "店员没有急着上吹风机，会分段休息，还把敏感位置记录下来，下次很省心。",
+    name: "奶茶妈妈",
+    pet: "贵宾犬 · 安抚洗护",
+  },
+  {
+    title: "“交付反馈非常详细。”",
+    copy: "耳朵有点泛红，店里拍照提醒并建议观察，感觉不是只做表面功夫。",
+    name: "可乐爸爸",
+    pet: "柯基 · 日常护理",
+  },
+  {
+    title: "“猫狗分区很加分。”",
+    copy: "猫咪预约的时段比较安静，没有被狗叫声吓到，洗完还愿意吃零食。",
+    name: "团子主人",
+    pet: "布偶猫 · 低压护理",
+  },
+  {
+    title: "“造型保持得久。”",
+    copy: "修完两周脸型还很整齐，店员教的梳毛顺序真的有用，打结少了很多。",
+    name: "奥利奥妈妈",
+    pet: "泰迪 · 精修造型",
+  },
 ];
 
 function Button({ href, children, secondary = false, gold = false }) {
@@ -474,17 +519,40 @@ export default function Home() {
               title="主人们的真实反馈"
               copy="每只宠物离店前都会做二次检查，确保毛发全干、耳道清爽、情绪稳定。"
             />
-            <div className="grid grid-cols-3 gap-[18px] max-[900px]:grid-cols-1">
-              {reviews.map(([title, copy]) => (
-                <article
-                  className="rounded-lg border border-line bg-white p-6 shadow-card"
-                  key={title}
-                >
-                  <div className="mb-3 text-lg tracking-normal text-coral">★★★★★</div>
-                  <strong className="mb-2 block text-[21px]">{title}</strong>
-                  <p className="m-0 text-muted">{copy}</p>
-                </article>
-              ))}
+            <div className="reviews-carousel overflow-hidden" aria-label="客户评价轮播">
+              <div className="reviews-track flex w-max gap-[18px]">
+                {[0, 1].map((group) => (
+                  <div
+                    className="reviews-strip flex gap-[18px]"
+                    key={group}
+                    aria-hidden={group === 1}
+                  >
+                    {reviews.map((review) => (
+                      <article
+                        className="review-card flex min-h-[252px] w-[min(360px,82vw)] flex-col rounded-lg border border-line bg-white p-6 shadow-card"
+                        key={`${review.title}-${group}`}
+                      >
+                        <div className="mb-4 flex items-center justify-between gap-4">
+                          <div className="text-lg tracking-normal text-coral" aria-label="五星评价">
+                            ★★★★★
+                          </div>
+                          <span className="rounded-full bg-mint px-2.5 py-1 text-xs font-extrabold text-teal">
+                            已复购
+                          </span>
+                        </div>
+                        <strong className="mb-3 block text-[21px] leading-tight">
+                          {review.title}
+                        </strong>
+                        <p className="m-0 flex-1 text-muted">{review.copy}</p>
+                        <div className="mt-5 border-t border-ink/10 pt-4">
+                          <strong className="block text-sm">{review.name}</strong>
+                          <span className="mt-1 block text-sm text-muted">{review.pet}</span>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
