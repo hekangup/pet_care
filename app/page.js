@@ -490,7 +490,7 @@ export default function Home() {
         </section>
 
         <section id="contact" className="px-6 py-[86px] max-[560px]:px-[18px] max-[560px]:py-[62px]">
-          <div className="mx-auto grid max-w-[1180px] grid-cols-2 gap-[18px] max-[900px]:grid-cols-1">
+          <div className="mx-auto flex max-w-[1180px] flex-col gap-[18px]">
             <div className="rounded-lg border border-line bg-white p-[26px] shadow-card">
               <h2 className="m-0 text-[clamp(30px,4vw,48px)] font-extrabold leading-[1.08] tracking-normal">
                 到店信息
@@ -506,15 +506,15 @@ export default function Home() {
               </div>
             </div>
             <figure
-              className="relative m-0 min-h-[360px] overflow-hidden rounded-lg bg-[#edf6f1] shadow-soft"
+              className="relative m-0 aspect-[1672/941] min-h-[280px] w-full overflow-hidden rounded-lg bg-[#edf6f1] shadow-soft max-[560px]:aspect-[4/3] max-[560px]:min-h-0"
               aria-label="毛孩子浴所门店位置示意图"
             >
               <Image
                 src="/assets/store-map-shaanxi-north-road.png"
                 alt="毛孩子浴所位于上海市宜川路街道陕西北路1620号的宠物风格地图"
                 fill
-                sizes="(max-width: 900px) 100vw, 50vw"
-                className="object-cover"
+                sizes="100vw"
+                className="object-contain"
               />
             </figure>
           </div>
