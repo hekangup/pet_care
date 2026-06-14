@@ -462,7 +462,7 @@ export default function Home() {
                 className="col-span-full inline-flex min-h-11 items-center justify-center rounded-lg bg-gold px-[18px] font-bold text-ink shadow-[0_12px_30px_rgba(23,32,29,.16)]"
                 type="button"
               >
-                提交预约意向
+                提交
               </button>
             </form>
           </div>
