@@ -1,4 +1,5 @@
 import Image from "next/image";
+import BookingDateInput from "./BookingDateInput";
 
 const heroSlides = [
   {
@@ -488,10 +489,11 @@ export default function Home() {
                 </select>
               </Field>
               <Field label="到店日期">
-                <input type="date" name="date" />
+                <BookingDateInput />
               </Field>
               <Field label="偏好时段">
-                <select name="time" defaultValue="上午 10:00 - 12:00">
+                <select name="time" defaultValue="早餐 09:30">
+                  <option>早餐 09:30</option>
                   <option>上午 10:00 - 12:00</option>
                   <option>下午 13:00 - 16:00</option>
                   <option>傍晚 16:00 - 18:30</option>
