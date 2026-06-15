@@ -16,5 +16,5 @@ function getTomorrowDateValue() {
 export default function BookingDateInput() {
   const tomorrowDate = useMemo(() => getTomorrowDateValue(), []);
 
-  return <input type="date" name="date" defaultValue={tomorrowDate} />;
+  return <input type="date" name="date" defaultValue={tomorrowDate} required />;
 }
