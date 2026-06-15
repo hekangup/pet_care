@@ -8,7 +8,7 @@ const initialMessage = {
   text: "",
 };
 
-export default function BookingForm() {
+export default function BookingForm({ copy }) {
   const [message, setMessage] = useState(initialMessage);
   const [isPending, startTransition] = useTransition();
 
@@ -30,25 +30,22 @@ export default function BookingForm() {
           body: JSON.stringify(payload),
         });
 
-        const data = await response.json();
+        await response.json().catch(() => ({}));
 
         if (!response.ok) {
-          setMessage({
-            type: "error",
-            text: data.message ?? "预约提交失败，请稍后再试。",
-          });
+          setMessage({ type: "error", text: copy.submitError });
           return;
         }
 
         form.reset();
         setMessage({
           type: "success",
-          text: data.message ?? "预约已提交，门店会尽快联系你确认。",
+          text: copy.success,
         });
       } catch {
         setMessage({
           type: "error",
-          text: "网络暂时不可用，请稍后再试。",
+          text: copy.networkError,
         });
       }
     });
@@ -59,43 +56,46 @@ export default function BookingForm() {
       className="grid grid-cols-2 gap-3.5 rounded-lg border border-white/20 bg-white/10 p-6 max-[560px]:grid-cols-1 max-[560px]:p-[18px]"
       onSubmit={handleSubmit}
     >
-      <Field label="主人姓名">
-        <input type="text" name="name" placeholder="例如：王女士" required />
+      <Field label={copy.labels.name}>
+        <input type="text" name="name" placeholder={copy.placeholders.name} required />
       </Field>
-      <Field label="联系电话">
-        <input type="tel" name="phone" placeholder="请输入手机号" required />
+      <Field label={copy.labels.phone}>
+        <input type="tel" name="phone" placeholder={copy.placeholders.phone} required />
       </Field>
-      <Field label="宠物类型">
+      <Field label={copy.labels.pet}>
         <select name="pet" defaultValue="小型犬" required>
-          <option>小型犬</option>
-          <option>中大型犬</option>
-          <option>短毛猫</option>
-          <option>长毛猫</option>
+          {copy.petOptions.map(([value, label]) => (
+            <option value={value} key={value}>
+              {label}
+            </option>
+          ))}
         </select>
       </Field>
-      <Field label="预约项目">
+      <Field label={copy.labels.service}>
         <select name="service" defaultValue="基础洁净洗护" required>
-          <option>基础洁净洗护</option>
-          <option>猫咪低压护理</option>
-          <option>精修造型</option>
-          <option>SPA 护理</option>
+          {copy.serviceOptions.map(([value, label]) => (
+            <option value={value} key={value}>
+              {label}
+            </option>
+          ))}
         </select>
       </Field>
-      <Field label="到店日期">
+      <Field label={copy.labels.date}>
         <BookingDateInput />
       </Field>
-      <Field label="偏好时段">
+      <Field label={copy.labels.time}>
         <select name="time" defaultValue="早餐 09:30" required>
-          <option>早餐 09:30</option>
-          <option>上午 10:00 - 12:00</option>
-          <option>下午 13:00 - 16:00</option>
-          <option>傍晚 16:00 - 18:30</option>
+          {copy.timeOptions.map(([value, label]) => (
+            <option value={value} key={value}>
+              {label}
+            </option>
+          ))}
         </select>
       </Field>
-      <Field label="备注" wide>
+      <Field label={copy.labels.note} wide>
         <textarea
           name="note"
-          placeholder="例如：胆小、怕吹风、最近有皮肤问题等"
+          placeholder={copy.placeholders.note}
         />
       </Field>
       <button
@@ -103,7 +103,7 @@ export default function BookingForm() {
         disabled={isPending}
         type="submit"
       >
-        {isPending ? "提交中..." : "提交"}
+        {isPending ? copy.submitting : copy.submit}
       </button>
       {message.text ? (
         <p
